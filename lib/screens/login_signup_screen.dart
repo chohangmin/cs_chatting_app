@@ -38,16 +38,16 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                           text: 'Welcome',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 25,
                             color: Colors.white,
                           ),
                           children: [
                             TextSpan(
-                              text: ' to Yummy chat!',
-                              style: TextStyle(
+                              text: isSignup ? ' to Yummy chat!' : ' back!',
+                              style: const TextStyle(
                                 fontSize: 25,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -58,9 +58,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text(
-                      'signup to continue',
-                      style: TextStyle(
+                    Text(
+                      isSignup ? 'Signup to continue' : 'Signin to continue',
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -69,11 +69,15 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
             ),
           ),
-          Positioned(
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeIn,
             top: 180,
-            child: Container(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeIn,
               padding: const EdgeInsets.all(20),
-              height: 280,
+              height: isSignup ? 280 : 250,
               width: MediaQuery.of(context).size.width - 40,
               margin: const EdgeInsets.symmetric(
                 horizontal: 20,
@@ -102,19 +106,22 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         },
                         child: Column(
                           children: [
-                            const Text(
+                            Text(
                               'LOGIN',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Palette.textColor1,
+                                color: !isSignup
+                                    ? Palette.activeColor
+                                    : Palette.textColor1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Container(
-                              height: 5,
-                              width: 45,
-                              color: Colors.orange,
-                            ),
+                            if (!isSignup)
+                              Container(
+                                height: 5,
+                                width: 45,
+                                color: Colors.orange,
+                              ),
                           ],
                         ),
                       ),
@@ -126,26 +133,270 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         },
                         child: Column(
                           children: [
-                            const Text(
+                            Text(
                               'SIGNUP',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Palette.textColor1,
+                                color: isSignup
+                                    ? Palette.activeColor
+                                    : Palette.textColor1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Container(
-                              height: 5,
-                              width: 45,
-                              color: Colors.orange,
-                            ),
+                            if (isSignup)
+                              Container(
+                                height: 5,
+                                width: 45,
+                                color: Colors.orange,
+                              ),
                           ],
                         ),
                       ),
                     ],
                   ),
+                  if (isSignup)
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Form(
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.account_circle,
+                                  color: Palette.iconColor,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                hintText: 'User name',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  color: Palette.textColor1,
+                                ),
+                                contentPadding: EdgeInsets.all(10),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.email,
+                                  color: Palette.iconColor,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                hintText: 'Email',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  color: Palette.textColor1,
+                                ),
+                                contentPadding: EdgeInsets.all(10),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Palette.iconColor,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                hintText: 'Password',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  color: Palette.textColor1,
+                                ),
+                                contentPadding: EdgeInsets.all(10),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (!isSignup)
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Form(
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.account_circle,
+                                  color: Palette.iconColor,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                hintText: 'User name',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  color: Palette.textColor1,
+                                ),
+                                contentPadding: EdgeInsets.all(10),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Palette.iconColor,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35),
+                                  ),
+                                ),
+                                hintText: 'Password',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  color: Palette.textColor1,
+                                ),
+                                contentPadding: EdgeInsets.all(10),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                 ],
               ),
+            ),
+          ),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeIn,
+            top: isSignup ? 430 : 400,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                height: 80,
+                width: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(
+                    50,
+                  ),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        Colors.orange,
+                        Colors.red,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 1,
+                        spreadRadius: 1,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.height - 125,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                Text(isSignup ? 'or Signup with' : 'or Signin with'),
+                const SizedBox(
+                  height: 3,
+                ),
+                TextButton.icon(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(155, 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: Palette.googleColor,
+                  ),
+                  icon: const Icon(Icons.add),
+                  label: const Text('Google'),
+                ),
+              ],
             ),
           ),
         ],
