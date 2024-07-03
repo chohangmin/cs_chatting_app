@@ -373,8 +373,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
             ),
           ),
-          Positioned(
-            top: MediaQuery.of(context).size.height - 125,
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeIn,
+            top: isSignup
+                ? MediaQuery.of(context).size.height - 95
+                : MediaQuery.of(context).size.height - 125,
             left: 0,
             right: 0,
             child: Column(
