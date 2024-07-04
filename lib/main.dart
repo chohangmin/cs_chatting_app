@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:cs_chat_app/screens/login_signup_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+    apiKey: 'key',
+    appId: 'id',
+    messagingSenderId: 'sendid',
+    projectId: 'myapp',
+    storageBucket: 'myapp-b9yt18.appspot.com',
+  ));
+
   runApp(const MyApp());
 }
 
