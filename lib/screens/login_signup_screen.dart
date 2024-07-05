@@ -468,6 +468,34 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         }
                       }
 
+                      if (!isSignup) {
+                        _tryValidation();
+                        try {
+                          final newUser =
+                              await _authentication.signInWithEmailAndPassword(
+                            email: userEmail,
+                            password: userPassword,
+                          );
+                          if (newUser.user != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return const ChatScreen();
+                              }),
+                            );
+                          }
+                        } catch (e) {
+                          print(e);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Please check your email and password'),
+                              backgroundColor: Colors.blue,
+                            ),
+                          );
+                        }
+                      }
+
                       print(userName);
                       print(userEmail);
                       print(userPassword);
