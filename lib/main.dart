@@ -1,6 +1,8 @@
+import 'package:cs_chat_app/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cs_chat_app/screens/login_signup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +17,6 @@ void main() async {
   ));
 
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +28,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginSignupScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const ChatScreen();
+          }
+          return const LoginSignupScreen();
+        },
+      ),
     );
   }
 }
