@@ -33,6 +33,7 @@ class Message extends StatelessWidget {
               child: ChatBubble(
                 chatDocs[index]['text'],
                 chatDocs[index]['userID'].toString() == user!.uid,
+                chatDocs[index]['userName']
               ),
             );
           },
