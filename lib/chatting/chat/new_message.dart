@@ -15,7 +15,7 @@ class _NewMessageState extends State<NewMessage> {
   final user = FirebaseAuth.instance.currentUser;
 
   void _sendMessage() {
-    Focus.of(context).unfocus();
+    // Focus.of(context).unfocus();
 
     FirebaseFirestore.instance.collection('chat').add({
       'text': _userEnterMessage,
@@ -30,15 +30,18 @@ class _NewMessageState extends State<NewMessage> {
     return Container(
       child: Row(
         children: [
-          TextField(
-            maxLines: null,
-            decoration: const InputDecoration(labelText: 'Send a message...'),
-            controller: _controller,
-            onChanged: (value) {
-              setState(() {
-                _userEnterMessage = value;
-              });
-            },
+          SizedBox(
+            width: 200,
+            child: TextField(
+              maxLines: null,
+              decoration: const InputDecoration(labelText: 'Send a message...'),
+              controller: _controller,
+              onChanged: (value) {
+                setState(() {
+                  _userEnterMessage = value;
+                });
+              },
+            ),
           ),
           IconButton(
             onPressed: _userEnterMessage.trim().isEmpty ? null : _sendMessage,

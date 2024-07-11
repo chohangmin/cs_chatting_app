@@ -36,10 +36,12 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Chat Screen'),
+          automaticallyImplyLeading: false,
           actions: [
             IconButton(
                 onPressed: () {
                   _authentication.signOut();
+                  Navigator.pop(context);
                 },
                 icon: const Icon(
                   Icons.exit_to_app_sharp,
@@ -49,11 +51,11 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         body: Container(
           child: const Column(
-            children: [
-              Expanded(child: Message()),
-              NewMessage(),
-            ],
-          ),
+              children: [
+                Expanded(child: Message()),
+                NewMessage(),
+              ],
+              ),
         ));
   }
 }

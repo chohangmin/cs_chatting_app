@@ -472,12 +472,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               });
 
                               if (newUser.user != null) {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) {
-                                //     return const ChatScreen();
-                                //   }),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return const ChatScreen();
+                                  }),
+                                );
                                 setState(() {
                                   showSpinner = false;
                                 });
@@ -504,12 +504,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               );
                               if (newUser.user != null) {
                                 print('[SSS] log in success');
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) {
-                                //     return const ChatScreen();
-                                //   }),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return const ChatScreen();
+                                  }),
+                                );
                                 setState(() {
                                   showSpinner = false;
                                 });
