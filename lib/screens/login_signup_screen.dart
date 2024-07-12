@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({super.key});
@@ -516,12 +517,22 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 password: userPassword,
                               );
 
+                              final refImage = FirebaseStorage.instance
+                                  .ref()
+                                  .child('picked_image')
+                                  .child('${newUser.user!.uid}.png');
+
+                              await refImage.putFile(userPickedImage!);
+
+                              final url = await refImage.getDownloadURL();
+
                               await FirebaseFirestore.instance
                                   .collection('user')
                                   .doc(newUser.user!.uid)
                                   .set({
                                 'userName': userName,
-                                'email': userEmail
+                                'email': userEmail,
+                                'picked_image': url,
                               });
 
                               if (newUser.user != null) {
@@ -536,16 +547,15 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 });
                               }
                             } catch (e) {
-                              print(e);
-                              if (mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        'Please check your email and password'),
-                                    backgroundColor: Colors.blue,
-                                  ),
-                                );
-                              }
+                              print('[AAA] $e');
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Please check your email and password'),
+                                  backgroundColor: Colors.blue,
+                                ),
+                              );
                             }
                           }
 
