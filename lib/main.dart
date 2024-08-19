@@ -25,19 +25,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chatting app',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return const ChatScreen();
-          }
-          return const LoginSignupScreen();
-        },
-      ),
-    );
+        title: 'Chatting app',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const LoginSignupScreen());
   }
 }

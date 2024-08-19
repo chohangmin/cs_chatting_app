@@ -23,16 +23,24 @@ class Message extends StatelessWidget {
           );
         }
 
+        if (snapshot.data == null) {
+          return const Center(
+            child: Text('Snapshot data is null'),
+          );
+        }
+
         final chatDocs = snapshot.data!.docs;
 
         return ListView.builder(
+          reverse: true,
           itemCount: chatDocs.length,
           itemBuilder: (context, index) {
             return Container(
               child: ChatBubble(
-                chatDocs[index]['text'],
-                chatDocs[index]['userID'].toString() == user!.uid,
-              ),
+                  chatDocs[index]['text'],
+                  chatDocs[index]['userID'].toString() == user!.uid,
+                  chatDocs[index]['userName'],
+                  chatDocs[index]['userImage']),
             );
           },
         );
